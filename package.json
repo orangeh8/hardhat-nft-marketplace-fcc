@@ -6,7 +6,8 @@
     "lint": "solhint 'contracts/*.sol'",
     "lint:fix": "solhint 'contracts/**/*.sol' --fix",
     "format": "prettier --write .",
-    "coverage": "hardhat coverage"
+    "coverage": "hardhat coverage",
+    "listing": "yarn hardhat --network localhost run scripts/mint-and-list-item.js"
   },
   "devDependencies": {
     "@chainlink/contracts": "^0.4.0",
