@@ -8,8 +8,8 @@ async function mainMintAndList(count) {
         await mintAndList(await ethers.getContract("BasicNft"));
         await mintAndList(await ethers.getContract("BasicNftTwo"));
     }
-
 }
+
 async function mintAndList(basicNft) {
     const nftMarketplace = await ethers.getContract("NftMarketplace")
     const randomNumber = Math.floor(Math.random() * 2)
@@ -39,7 +39,7 @@ async function mintAndList(basicNft) {
     }
 }
 
-mainMintAndList(3)
+mainMintAndList(1)
     .then(() => process.exit(0))
     .catch((error) => {
         console.error(error)
