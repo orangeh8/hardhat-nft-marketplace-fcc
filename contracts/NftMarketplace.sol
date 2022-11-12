@@ -3,6 +3,7 @@ pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 // Check out https://github.com/Fantom-foundation/Artion-Contracts/blob/5c90d2bc0401af6fb5abf35b860b762b31dfee02/contracts/FantomMarketplace.sol
 // For a full decentralized nft marketplace
@@ -20,6 +21,8 @@ error PriceMustBeAboveZero();
 // error IsNotOwner()
 
 contract NftMarketplace is ReentrancyGuard {
+    using Strings for uint256;
+
     struct Listing {
         uint256 price;
         address seller;
@@ -45,13 +48,11 @@ contract NftMarketplace is ReentrancyGuard {
         uint256 price
     );
 
+    string[] private s_tokens;
     mapping(address => mapping(uint256 => Listing)) private s_listings;
     mapping(address => uint256) private s_proceeds;
 
-    modifier notListed(
-        address nftAddress,
-        uint256 tokenId
-    ) {
+    modifier notListed(address nftAddress, uint256 tokenId) {
         Listing memory listing = s_listings[nftAddress][tokenId];
         if (listing.price > 0) {
             revert AlreadyListed(nftAddress, tokenId);
@@ -109,11 +110,7 @@ contract NftMarketplace is ReentrancyGuard {
         address nftAddress,
         uint256 tokenId,
         uint256 price
-    )
-        external
-        notListed(nftAddress, tokenId)
-        isOwner(nftAddress, tokenId, msg.sender)
-    {
+    ) external notListed(nftAddress, tokenId) isOwner(nftAddress, tokenId, msg.sender) {
         if (price <= 0) {
             revert PriceMustBeAboveZero();
         }
@@ -219,7 +216,31 @@ contract NftMarketplace is ReentrancyGuard {
         return s_listings[nftAddress][tokenId];
     }
 
+    // function getListing(address nftAddress) external view returns (mapping(uint256 => Listing) me) {
+    //     return s_listings[nftAddress];
+    // }
+
     function getProceeds(address seller) external view returns (uint256) {
         return s_proceeds[seller];
+    }
+
+    function addToken(string memory _address, uint256 _tokenId) public {
+        string memory value = string(abi.encodePacked(_address, "_", _tokenId.toString()));
+        s_tokens.push(value);
+    }
+
+    // function delToken(string memory _address, uint256 _tokenId) public {
+    //     string memory value = string(abi.encodePacked(_address, "_", _tokenId.toString()));
+    //     for (uint256 i = 0; i < s_tokens.length; i++) {
+    //         string memory _token = s_tokens[i];
+    //         if (_token == value) {
+    //             delete s_tokens[i];
+    //         }
+    //     }
+    // }
+
+    function getToken() public view returns (string[] memory) {
+        string[] memory _tokens = s_tokens;
+        return _tokens;
     }
 }

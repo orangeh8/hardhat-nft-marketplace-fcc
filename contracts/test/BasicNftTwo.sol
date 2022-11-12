@@ -6,18 +6,14 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract BasicNftTwo is ERC721 {
     using Strings for uint256;
-
-    string public constant TOKEN_URI = "ipfs://QmdryoExpgEQQQgJPoruwGJyZmz6SqV4FRTX1i73CT3iXn";
-
-    string internal baseURI = "ipfs://QmciivWCFZP7tRQBYg3FkTHaUpg8FLsN2wcWJA8ik7cf2H/";
-    string internal uriSuffix = ".json";
-
+    string public constant TOKEN_URI =
+        "ipfs://QmXmuSenZRnofhGMz2NyT3Yc4Zrty1TypuiBKDcaBsNw9V/1.gif";
     uint256 private s_tokenCounter;
 
     event DogMinted(uint256 indexed tokenId);
 
     constructor() ERC721("Dogie", "DOG") {
-        s_tokenCounter = 0;
+        s_tokenCounter = 1;
     }
 
     function mintNft() public {
@@ -28,11 +24,12 @@ contract BasicNftTwo is ERC721 {
 
     function tokenURI(uint256 _tokenId) public view override returns (string memory) {
         require(_exists(_tokenId), "ERC721Metadata: URI query for nonexistent token");
+        return TOKEN_URI;
 
-        return
-            bytes(baseURI).length > 0
-                ? string(abi.encodePacked(baseURI, _tokenId.toString(), uriSuffix))
-                : "";
+        // return
+        //     bytes(TOKEN_URI).length > 0
+        //         ? string(abi.encodePacked(TOKEN_URI, _tokenId.toString()))
+        //         : "";
     }
 
     function getTokenCounter() public view returns (uint256) {
