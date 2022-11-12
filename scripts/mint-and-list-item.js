@@ -4,10 +4,10 @@ const { moveBlocks } = require("../utils/move-blocks")
 const PRICE = ethers.utils.parseEther("0.1")
 
 async function mainMintAndList(count) {
-
+    console.log('mintAndList(await ethers.getContract("BasicNft"))', mintAndList(await ethers.getContract("BasicNft")).then(data => console.log(data)))
     for (let i = 0; i < count; i++) {
-        await mintAndList(await ethers.getContract("BasicNft"));
-        await mintAndList(await ethers.getContract("BasicNftTwo"));
+        mintAndList(await ethers.getContract("BasicNft"));
+        mintAndList(await ethers.getContract("BasicNftTwo"));
     }
 
 }

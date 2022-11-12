@@ -32,6 +32,7 @@ const frontEndContractsFile2 =
     "../nextjs-nft-marketplace-thegraph-fcc/constants/networkMapping.json"
 const frontEndAbiLocation = "../nextjs-nft-marketplace-moralis-fcc/constants/"
 const frontEndAbiLocation2 = "../nextjs-nft-marketplace-thegraph-fcc/constants/"
+const imetaidFrontEnd = "../imetaid/src/utils/"
 
 module.exports = {
     networkConfig,
@@ -41,4 +42,5 @@ module.exports = {
     frontEndContractsFile2,
     frontEndAbiLocation,
     frontEndAbiLocation2,
+    imetaidFrontEnd,
 }
