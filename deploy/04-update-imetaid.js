@@ -2,14 +2,12 @@ require("dotenv").config()
 const fs = require("fs")
 const { network } = require("hardhat")
 
-const {
-    imetaidFrontEnd
-} = require("../helper-hardhat-config")
+const { imetaidFrontEnd } = require("../helper-hardhat-config")
 
 const FRONTEND_CONFIG_PATH = imetaidFrontEnd;
 
 module.exports = async () => {
-    if (process.env.UPDATE_FRONT_END) {
+    if (process.env.UPDATE_FRONT_END === true) {
         console.log("imetaid Writing to front end...")
         await updateContractAddresses("NftMarketplace")
         await updateContractAddresses("BasicNft")
